@@ -45,9 +45,10 @@
 
         function submitHandler(evt) {
             evt.preventDefault();
+            console.log(nameInput.value);
 
             axios
-                .post('/api/students', { name: nameInput.value })
+                .post('http://localhost:4545/api/students', { name: nameInput.value })
                 .then(res => {
                     putTheThingInTheView(res)
                 })
@@ -69,7 +70,7 @@
 
         // get student list on initial load
         axios
-            .get('/api/students')
+            .get('http://localhost:4545/api/students')
             .then(res => {
                 putTheThingInTheView(res)
             })

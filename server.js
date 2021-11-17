@@ -16,12 +16,17 @@ const app = express();
 const students = ["Jeddy"];
 
 app.use(cors());
-app.use(express());
+app.use(express.json());
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
     rollbar.info("HTML file served successfully!");
 });
+
+app.get('/api/students', (req, res) => {
+  rollbar.info('Someone got the list of students on page load')
+  res.status(200).send(students)
+})
 
 app.post('/api/students', function(req, res) {
     let { name } = req.body;
