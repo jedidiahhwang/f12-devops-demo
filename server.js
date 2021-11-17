@@ -29,29 +29,22 @@ app.get('/api/students', (req, res) => {
 })
 
 app.post('/api/students', function(req, res) {
-    let { name } = req.body;
-    
-    const index = students.findIndex((student) => {
-        return student === name
-    })
+  let {name} = req.body
+  name = name.trim()
 
-    try {
-        if (index === -1 && name !== "") {
-          students.push(name);
-          rollbar.info('Someone added a student')
-          res.status(200).send(students);
-        } else if (name === "") {
-            rollbar.error('Someone tried to enter a blank student')
+  const index = students.findIndex(studentName=> studentName === name)
 
-            res.status(400).send("must provide a name");
-        } else {
-            rollbar.error('Someone tried to enter a duplicate student name')
-          res.status(400).send("that student already exists");
-        }
-      } catch (err) {
-        console.log(err)
-        rollbar.error(err)
-      }
+  if(index === -1 && name !== ''){
+      students.push(name)
+      rollbar.log('Student added successfully', {author: 'Scott', type: 'manual entry'})
+      res.status(200).send(students)
+  } else if (name === ''){
+      rollbar.error('No name given')
+      res.status(400).send('must provide a name.')
+  } else {
+      rollbar.error('student already exists')
+      res.status(400).send('that student already exists')
+  }
 })
 
 const port = process.env.PORT || 4545
