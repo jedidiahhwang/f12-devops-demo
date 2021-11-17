@@ -18,7 +18,7 @@ const students = ["Jeddy"];
 app.use(cors());
 app.use(express.json());
 
-app.use("/css", express.static("/public/styles.css"));
+app.use("/css", express.static(path.join(__dirname, "/public/styles.css")));
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
