@@ -13,7 +13,7 @@ let rollbar = new Rollbar({
 rollbar.log('Hello world!')
 
 const app = express();
-const students = [];
+const students = ["Jeddy"];
 
 app.use(cors());
 app.use(express());
@@ -23,16 +23,35 @@ app.get("/", (req, res) => {
     rollbar.info("HTML file served successfully!");
 });
 
-app.post("/api/student", (req, res) => {
-    let {name} = req.body; // This needs to be let (used to be const)
-    name = name.trim();
-    students.push(name);
+app.post('/api/students', function(req, res) {
+    let { name } = req.body;
+    
+    const index = students.findIndex((student) => {
+        return student === name
+    })
 
-    rollbar.log("Student added successfully", {author: "Jeddy", type: "Manual entry"})
-    res.status(200).send(students);
-});
+    try {
+        if (index === -1 && name !== "") {
+          students.push(name);
+          rollbar.info('Someone added a student')
+          res.status(200).send(students);
+        } else if (name === "") {
+            rollbar.error('Someone tried to enter a blank student')
+
+            res.status(400).send("must provide a name");
+        } else {
+            rollbar.error('Someone tried to enter a duplicate student name')
+          res.status(400).send("that student already exists");
+        }
+      } catch (err) {
+        console.log(err)
+        rollbar.error(err)
+      }
+})
 
 const port = process.env.PORT || 4545
+
+app.use(rollbar.errorHandler());
 
 app.listen(port, () => {
     console.log(`They're taking the Hobbits to port ${port}`);
