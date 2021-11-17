@@ -20,10 +20,12 @@ app.use(express.json());
 
 app.use("/css", express.static(path.join(__dirname, "/public/styles.css")));
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
-    rollbar.info("HTML file served successfully!");
-});
+app.use("/", express.static(path.join(__dirname, "/public/index.html")));
+
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname, "/public/index.html"));
+//     rollbar.info("HTML file served successfully!");
+// });
 
 app.get('/api/students', (req, res) => {
   rollbar.info('Someone got the list of students on page load')
