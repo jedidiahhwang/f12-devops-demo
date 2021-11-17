@@ -5,6 +5,7 @@ const Rollbar = require("rollbar");
 
 const app = express();
 
+app.use(cors());
 app.use(express());
 
 app.get("/", (req, res) => {
