@@ -18,6 +18,8 @@ const students = ["Jeddy"];
 app.use(cors());
 app.use(express.json());
 
+app.use("/css", express.static(__dirname, "/public/styles.css"));
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
     rollbar.info("HTML file served successfully!");
