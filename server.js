@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.use("/css", express.static(path.join(__dirname, "/public/styles.css")));
 
-app.use("/html", express.static(path.join(__dirname, "/public/index.html")));
+app.use("/", express.static(path.join(__dirname, "/public/index.html")));
 
 // app.get("/", (req, res) => {
 //     res.sendFile(path.join(__dirname, "/public/index.html"));
