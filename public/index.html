@@ -48,7 +48,7 @@
             console.log(nameInput.value);
 
             axios
-                .post('http://localhost:4545/api/students', { name: nameInput.value })
+                .post('/api/students', { name: nameInput.value })
                 .then(res => {
                     putTheThingInTheView(res)
                 })
@@ -70,7 +70,7 @@
 
         // get student list on initial load
         axios
-            .get('http://localhost:4545/api/students')
+            .get('/api/students')
             .then(res => {
                 putTheThingInTheView(res)
             })
