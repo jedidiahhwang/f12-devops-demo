@@ -3,6 +3,15 @@ const path = require("path");
 const cors = require("cors");
 const Rollbar = require("rollbar");
 
+let rollbar = new Rollbar({
+    accessToken: 'c6091fb9bf5c4d52ac07cbdc80e01d24',
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+})
+  
+// record a generic message and send it to Rollbar
+rollbar.log('Hello world!')
+
 const app = express();
 
 app.use(cors());
